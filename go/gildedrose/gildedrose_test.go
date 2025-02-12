@@ -59,7 +59,7 @@ func Test_Reduce_QualityDouble(t *testing.T) {
 
 func Test_Quality_Never_Negative(t *testing.T) {
 	var items = []*gildedrose.Item{
-		{"caducated", 0, 1},
+		{"caducated", 0, 0},
 	}
 
 	gildedrose.UpdateQuality(items)
@@ -142,5 +142,29 @@ func Test_BackStage_expired(t *testing.T) {
 
 	if items[0].Quality != 0 {
 		t.Errorf("Quality : Expected %d but got %d ", 0, items[0].Quality)
+	}
+}
+
+func Test_Conjured_valid(t *testing.T) {
+	var items = []*gildedrose.Item{
+		{"Conjured", 5, 10},
+	}
+
+	gildedrose.UpdateQuality(items)
+
+	if items[0].Quality != 8 {
+		t.Errorf("Quality : Expected %d but got %d ", 8, items[0].Quality)
+	}
+}
+
+func Test_Conjured_Expired(t *testing.T) {
+	var items = []*gildedrose.Item{
+		{"Conjured", 0, 10},
+	}
+
+	gildedrose.UpdateQuality(items)
+
+	if items[0].Quality != 6 {
+		t.Errorf("Quality : Expected %d but got %d ", 6, items[0].Quality)
 	}
 }

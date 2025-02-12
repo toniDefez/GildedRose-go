@@ -8,51 +8,90 @@ type Item struct {
 func UpdateQuality(items []*Item) {
 	for i := 0; i < len(items); i++ {
 
-		if items[i].Name != "Aged Brie" && items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
-			if items[i].Quality > 0 {
-				if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-					items[i].Quality = items[i].Quality - 1
-				}
-			}
-		} else {
-			if items[i].Quality < 50 {
-				items[i].Quality = items[i].Quality + 1
-				if items[i].Name == "Backstage passes to a TAFKAL80ETC concert" {
-					if items[i].SellIn < 11 {
-						if items[i].Quality < 50 {
-							items[i].Quality = items[i].Quality + 1
-						}
-					}
-					if items[i].SellIn < 6 {
-						if items[i].Quality < 50 {
-							items[i].Quality = items[i].Quality + 1
-						}
-					}
-				}
-			}
-		}
+		currentItem := items[i]
 
-		if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-			items[i].SellIn = items[i].SellIn - 1
-		}
-
-		if items[i].SellIn < 0 {
-			if items[i].Name != "Aged Brie" {
-				if items[i].Name != "Backstage passes to a TAFKAL80ETC concert" {
-					if items[i].Quality > 0 {
-						if items[i].Name != "Sulfuras, Hand of Ragnaros" {
-							items[i].Quality = items[i].Quality - 1
-						}
-					}
-				} else {
-					items[i].Quality = items[i].Quality - items[i].Quality
-				}
-			} else {
-				if items[i].Quality < 50 {
-					items[i].Quality = items[i].Quality + 1
-				}
-			}
+		switch currentItem.Name {
+		case "Aged Brie":
+			items[i] = UpdateBrie(*currentItem)
+		case "Conjured":
+			items[i] = UpdateConjured(*currentItem)
+		case "Backstage passes to a TAFKAL80ETC concert":
+			items[i] = UpdateBackStage(*currentItem)
+		case "Sulfuras, Hand of Ragnaros":
+			items[i] = currentItem
+		default:
+			items[i] = UpdateDefault(*currentItem)
 		}
 	}
 
+}
+
+func UpdateBrie(currentItem Item) *Item {
+	currentItem.SellIn--
+	if currentItem.SellIn <= 0 {
+		tempQuality := currentItem.Quality + 2
+		if tempQuality > 50 {
+			currentItem.Quality = 50
+		} else {
+			currentItem.Quality = tempQuality
+		}
+	} else {
+		currentItem.Quality++
+	}
+	return &currentItem
+}
+
+func UpdateConjured(currentItem Item) *Item {
+	currentItem.SellIn--
+
+	if currentItem.SellIn < 0 {
+		tempQuality := currentItem.Quality - 4
+		if tempQuality < 0 {
+			currentItem.Quality = 0
+		} else {
+			currentItem.Quality = tempQuality
+		}
+	} else {
+		tempQuality := currentItem.Quality - 2
+		if tempQuality < 0 {
+			currentItem.Quality = 0
+		} else {
+			currentItem.Quality = tempQuality
+		}
+	}
+	return &currentItem
+}
+
+func UpdateBackStage(currentItem Item) *Item {
+	currentItem.SellIn--
+	if currentItem.SellIn < 0 {
+		currentItem.Quality = 0
+	} else if currentItem.SellIn > 5 && currentItem.SellIn <= 10 {
+		currentItem.Quality = currentItem.Quality + 2
+	} else if currentItem.SellIn <= 5 && currentItem.SellIn >= 0 {
+		currentItem.Quality = currentItem.Quality + 3
+	} else {
+		currentItem.Quality--
+	}
+
+	return &currentItem
+
+}
+
+func UpdateDefault(currentItem Item) *Item {
+	currentItem.SellIn--
+
+	if currentItem.SellIn < 0 {
+		tempQuality := currentItem.Quality - 2
+		if tempQuality > 0 {
+			currentItem.Quality = tempQuality
+		} else {
+			currentItem.Quality = 0
+		}
+	} else {
+		if currentItem.Quality > 0 {
+			currentItem.Quality--
+		}
+	}
+	return &currentItem
 }
