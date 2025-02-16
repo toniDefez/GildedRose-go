@@ -133,6 +133,18 @@ func Test_BackStage_Five_days(t *testing.T) {
 	}
 }
 
+func Test_BackStage_Five_days_maximum(t *testing.T) {
+	var items = []*gildedrose.Item{
+		{"Backstage passes to a TAFKAL80ETC concert", 5, 50},
+	}
+
+	gildedrose.UpdateQuality(items)
+
+	if items[0].Quality != 50 {
+		t.Errorf("Quality : Expected %d but got %d ", 50, items[0].Quality)
+	}
+}
+
 func Test_BackStage_expired(t *testing.T) {
 	var items = []*gildedrose.Item{
 		{"Backstage passes to a TAFKAL80ETC concert", -1, 88},
