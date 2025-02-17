@@ -1,4 +1,4 @@
-package gildedrose
+package models
 
 const (
 	BACKSTAGE_PASSES_DOUBLE_INCREASE = 10
@@ -10,7 +10,7 @@ type Backstage struct {
 	SuperItem
 }
 
-func (b Backstage) Update() {
+func (b *Backstage) Update() {
 	b.DecreaseSellIn()
 	b.IncreaseQuality()
 

@@ -5,13 +5,14 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/emilybache/gildedrose-refactoring-kata/gildedrose_old"
+	"github.com/emilybache/gildedrose-refactoring-kata/gildedrose"
+	"github.com/emilybache/gildedrose-refactoring-kata/gildedrose/models"
 )
 
 func main() {
 	fmt.Println("OMGHAI!")
 
-	var items = []*gildedrose_old.Item{
+	var items = []*models.ItemOld{
 		{"+5 Dexterity Vest", 10, 20},
 		{"Aged Brie", 2, 0},
 		{"Elixir of the Mongoose", 5, 7},
@@ -41,6 +42,6 @@ func main() {
 			fmt.Println(items[i])
 		}
 		fmt.Println("")
-		gildedrose_old.UpdateQuality(items)
+		gildedrose.UpdateQuality(items)
 	}
 }

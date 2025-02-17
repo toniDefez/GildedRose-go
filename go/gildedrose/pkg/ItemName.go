@@ -1,4 +1,4 @@
-package gildedrose
+package pkg
 
 const (
 	AGED_BRIE = "Aged Brie"

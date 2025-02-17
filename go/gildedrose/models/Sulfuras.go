@@ -1,4 +1,4 @@
-package gildedrose
+package models
 
 type Sulfuras struct {
 	SuperItem

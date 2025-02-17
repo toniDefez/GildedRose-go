@@ -1,11 +1,11 @@
 package gildedrose
 
-type ItemOld struct {
-	Name            string
-	SellIn, Quality int
-}
+import (
+	models "github.com/emilybache/gildedrose-refactoring-kata/gildedrose/models"
+	pkg "github.com/emilybache/gildedrose-refactoring-kata/gildedrose/pkg"
+)
 
-func UpdateQuality(items []*ItemOld) []Item {
+func UpdateQuality(items []*models.ItemOld) []models.Item {
 
 	itemsNew := ConvertToNewSuperItems(items)
 
@@ -15,25 +15,25 @@ func UpdateQuality(items []*ItemOld) []Item {
 	return itemsNew
 }
 
-func ConvertToNewSuperItems(items []*ItemOld) []Item {
-	var newItems []Item
+func ConvertToNewSuperItems(items []*models.ItemOld) []models.Item {
+	var newItems []models.Item
 
 	for _, oldItem := range items {
-		name := ItemName{Name: oldItem.Name}
-		quality := ItemQuality{Value: oldItem.Quality}
-		sellIn := ItemSellin{Value: oldItem.SellIn}
+		name := pkg.ItemName{Name: oldItem.Name}
+		quality := pkg.ItemQuality{Value: oldItem.Quality}
+		sellIn := pkg.ItemSellin{Value: oldItem.SellIn}
 
-		var newItem Item
+		var newItem models.Item
 		if name.IsAgedBrie() {
-			newItem = &AgedBrie{SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
+			newItem = &models.AgedBrie{SuperItem: models.SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
 		} else if name.IsBackstagePasses() {
-			newItem = &Backstage{SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
+			newItem = &models.Backstage{SuperItem: models.SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
 		} else if name.IsSulfuras() {
-			newItem = &Sulfuras{SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
+			newItem = &models.Sulfuras{SuperItem: models.SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
 		} else if name.IsConjured() {
-			newItem = &Conjured{SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
+			newItem = &models.Conjured{SuperItem: models.SuperItem{Name: name, Quality: quality, SellIn: sellIn}}
 		} else {
-			newItem = &SuperItem{Name: name, Quality: quality, SellIn: sellIn} // Default
+			newItem = &models.SuperItem{Name: name, Quality: quality, SellIn: sellIn} // Default
 		}
 
 		newItems = append(newItems, newItem)

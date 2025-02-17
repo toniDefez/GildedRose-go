@@ -1,4 +1,4 @@
-package gildedrose
+package pkg
 
 type ItemSellin struct {
 	Value int
@@ -9,9 +9,9 @@ func (i *ItemSellin) DecreaseSellIn() {
 }
 
 func (s ItemSellin) IsCaducated() bool {
-	return s.Value < 0
+	return s.Value <= 0
 }
 
-func (s ItemSellin) isLessThan(days int) bool {
+func (s ItemSellin) IsLessThan(days int) bool {
 	return s.Value < days
 }

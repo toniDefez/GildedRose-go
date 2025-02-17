@@ -1,4 +1,4 @@
-package gildedrose
+package pkg
 
 const (
 	MAX_QUALITY_VALUE = 50
@@ -16,7 +16,7 @@ func (i *ItemQuality) IncreaseQuality() {
 }
 
 func (i *ItemQuality) DecreaseQuality() {
-	if i.Value < MIN_QUALITY_VALUE {
+	if i.Value > MIN_QUALITY_VALUE {
 		i.Value = i.Value - 1
 	}
 }
